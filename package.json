@@ -1,6 +1,6 @@
 {
   "name": "skillless",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Auto-discovery plugin for Claude Code — automatically recommends and installs capabilities without users needing to know about skills",
   "author": "0oooooooo0",
   "license": "MIT",
