@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from "child_process";
-import { existsSync, mkdirSync, cpSync } from "fs";
+import { existsSync, mkdirSync, cpSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { homedir } from "os";
@@ -11,6 +11,42 @@ const ROOT = join(__dirname, "..");
 const CLAUDE_DIR = join(homedir(), ".claude");
 const PLUGINS_DIR = join(CLAUDE_DIR, "plugins");
 const TARGET = join(PLUGINS_DIR, "skillless");
+const SETTINGS_PATH = join(CLAUDE_DIR, "settings.json");
+const PLUGIN_KEY = "skillless";
+
+function readSettings() {
+  if (!existsSync(SETTINGS_PATH)) return {};
+  try {
+    return JSON.parse(readFileSync(SETTINGS_PATH, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+function writeSettings(settings) {
+  writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2) + "\n");
+}
+
+function registerPlugin() {
+  const settings = readSettings();
+  settings.enabledPlugins = settings.enabledPlugins || {};
+  if (settings.enabledPlugins[PLUGIN_KEY]) {
+    return false;
+  }
+  settings.enabledPlugins[PLUGIN_KEY] = true;
+  writeSettings(settings);
+  return true;
+}
+
+function unregisterPlugin() {
+  const settings = readSettings();
+  if (!settings.enabledPlugins || !settings.enabledPlugins[PLUGIN_KEY]) {
+    return false;
+  }
+  delete settings.enabledPlugins[PLUGIN_KEY];
+  writeSettings(settings);
+  return true;
+}
 
 const args = process.argv.slice(2);
 const command = args[0];
@@ -59,11 +95,17 @@ function install() {
   }
 
   console.log("  Installed to: " + TARGET);
+
+  // Auto-register in Claude Code settings
+  const registered = registerPlugin();
+  if (registered) {
+    console.log("  Registered in Claude Code settings.");
+  } else {
+    console.log("  Already registered in Claude Code settings.");
+  }
+
   console.log("");
-  console.log("  Next, register the plugin in Claude Code:");
-  console.log(`    claude /plugin install ${TARGET}`);
-  console.log("");
-  console.log("  Then try: /discover react");
+  console.log("  Ready! Try: /discover react");
   console.log("");
 }
 
@@ -74,6 +116,7 @@ function uninstall() {
   }
 
   execSync(`rm -rf "${TARGET}"`);
+  unregisterPlugin();
   console.log("\n  skillless has been removed.\n");
 }
 
@@ -86,9 +129,13 @@ function status() {
   const dirs = [".claude-plugin", "skills", "commands"];
   const present = dirs.filter((d) => existsSync(join(TARGET, d)));
 
+  const settings = readSettings();
+  const isRegistered = !!(settings.enabledPlugins && settings.enabledPlugins[PLUGIN_KEY]);
+
   console.log("\n  Status: installed");
   console.log("  Location: " + TARGET);
   console.log("  Components: " + present.join(", "));
+  console.log("  Registered: " + (isRegistered ? "yes" : "no"));
   console.log("");
 }
 
