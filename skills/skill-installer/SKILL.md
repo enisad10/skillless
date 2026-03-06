@@ -25,12 +25,22 @@ When called with a skill to install, determine the source type and follow the ap
 The skill is already installed locally. Inform the user:
 > "This skill is already available on your system. You can use it right away."
 
-#### Type: `skillsadd`
+#### Type: `skills-add`
 The skill is listed on skills.sh and can be installed via npx. Run:
 ```bash
-npx skillsadd {owner/repo}
+npx skills add -y -g {owner/repo}
 ```
-This will automatically download and install the skill to the correct location.
+- `-y`: skip confirmation prompts
+- `-g`: install globally to `~/.claude/skills/`
+- Format: `{owner/repo}` (e.g., `vercel-labs/agent-skills`)
+- To install a specific skill from a multi-skill repo: `{owner/repo}/{skill-name}`
+
+**IMPORTANT**: The old `npx skillsadd` package is deprecated and no longer works. Always use `npx skills add`.
+
+If `npx skills add` fails (e.g., "No valid skills found"), fall back to direct GitHub download:
+1. Find the SKILL.md path via: `https://api.github.com/repos/{owner}/{repo}/git/trees/main?recursive=1`
+2. Download: `curl -sL https://raw.githubusercontent.com/{owner}/{repo}/refs/heads/main/{path-to-SKILL.md}`
+3. Save to `~/.claude/skills/{skill-name}/SKILL.md`
 
 #### Type: `github-plugin`
 The skill is part of a GitHub-hosted plugin. Guide the user:

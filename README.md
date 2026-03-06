@@ -22,6 +22,7 @@ Most users never type `/skill` because they don't know that's a thing. They miss
 
 **skillless** removes the knowledge barrier entirely.
 
+- **Smart planning** — `/plans` analyzes your project and installs the right tools before you start planning.
 - **Automatic recommendations** — Working with Docker? A specialized Docker tool gets suggested automatically. No commands needed.
 - **Explicit search** — Need something specific? `/discover kubernetes` searches across all sources at once.
 - **Zero jargon** — The plugin never says "skill" or "plugin" to users. It talks about "tools", "capabilities", and "expertise" instead.
@@ -50,9 +51,37 @@ cc --plugin-dir /path/to/skillless
 
 ### Usage
 
+#### `/plans` — Plan with the right tools
+
+The recommended way to use skillless. It analyzes your project, recommends tools, and enters plan mode — all in one step:
+
+```
+/plans React + Supabase dashboard with auth
+```
+
+What happens:
+1. Scans `package.json`, `tsconfig.json`, and other project files
+2. Detects your tech stack (React, Supabase, TypeScript, etc.)
+3. Searches for matching tools across all sources
+4. Shows recommendations and lets you pick what to install
+5. Enters plan mode with the installed tools ready to use
+
+```
+Detected: React, TypeScript, Supabase
+Already installed: typescript-expert
+
+Recommended:
+| # | Name                 | Source    | Description                    |
+|---|----------------------|----------|--------------------------------|
+| 1 | react-best-practices | skills.sh | React patterns and hooks      |
+| 2 | supabase-automation  | skills.sh | Supabase auth and DB patterns |
+
+Select tools to install (1,2 / skip):
+```
+
 #### Just work normally
 
-The best part — you don't have to do anything. When you're working with a specific framework or tool and a relevant capability exists, **skillless** will suggest it naturally:
+You don't have to do anything special. When you're working with a specific framework or tool and a relevant capability exists, **skillless** will suggest it naturally:
 
 > By the way, I found a **specialized tool for Kubernetes** that can help with cluster setup, manifest generation, and troubleshooting.
 > Would you like me to set it up?
@@ -83,8 +112,8 @@ Pick a number to install, or `cancel` to skip.
 
 ```
 ┌───────────────────────────────────────────┐
-│                /discover                   │
-│             or auto-discovery              │
+│          /plans  /discover                │
+│           or auto-discovery               │
 └───────────────────┬───────────────────────┘
                     │
        ┌────────────┼────────────┐
@@ -135,7 +164,8 @@ skillless/
 │   └── skill-installer/
 │       └── SKILL.md             # Installation handler
 └── commands/
-    └── discover.md              # /discover user command
+    ├── discover.md              # /discover user command
+    └── plans.md                 # /plans — plan with auto tool setup
 ```
 
 ## Contributing

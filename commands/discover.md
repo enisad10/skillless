@@ -35,7 +35,7 @@ If results found, display the table and ask:
 When the user selects a result, handle installation directly based on the source type:
 
 - **Already installed (local)**: Tell the user it's already available
-- **skills.sh**: Run `npx skillsadd <owner/repo>` via Bash, then verify installation
+- **skills.sh**: Run `npx skills add -y -g <owner/repo>` via Bash, then verify installation. If it fails with "No valid skills found", fall back to downloading SKILL.md directly from GitHub raw URL.
 - **GitHub plugin**: Guide the user to run `/plugin install <url>`
 - **Standalone SKILL.md**: Download via WebFetch and Write to `~/.claude/skills/{name}/SKILL.md`
 

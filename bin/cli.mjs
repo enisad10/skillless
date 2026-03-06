@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from "child_process";
-import { existsSync, mkdirSync, cpSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, cpSync, readFileSync, writeFileSync, readdirSync, rmSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { homedir } from "os";
@@ -12,6 +12,7 @@ const CLAUDE_DIR = join(homedir(), ".claude");
 const PLUGINS_DIR = join(CLAUDE_DIR, "plugins");
 const TARGET = join(PLUGINS_DIR, "skillless");
 const SETTINGS_PATH = join(CLAUDE_DIR, "settings.json");
+const COMMANDS_DIR = join(CLAUDE_DIR, "commands");
 const PLUGIN_KEY = "skillless";
 
 function readSettings() {
@@ -96,6 +97,16 @@ function install() {
 
   console.log("  Installed to: " + TARGET);
 
+  // Copy commands to ~/.claude/commands/ so they appear as slash commands
+  const commandsSrc = join(ROOT, "commands");
+  if (existsSync(commandsSrc)) {
+    if (!existsSync(COMMANDS_DIR)) {
+      mkdirSync(COMMANDS_DIR, { recursive: true });
+    }
+    cpSync(commandsSrc, COMMANDS_DIR, { recursive: true });
+    console.log("  Commands registered in: " + COMMANDS_DIR);
+  }
+
   // Auto-register in Claude Code settings
   const registered = registerPlugin();
   if (registered) {
@@ -105,7 +116,9 @@ function install() {
   }
 
   console.log("");
-  console.log("  Ready! Try: /discover react");
+  console.log("  Ready! Try:");
+  console.log("    /plans React + Tailwind landing page");
+  console.log("    /discover react");
   console.log("");
 }
 
@@ -113,6 +126,17 @@ function uninstall() {
   if (!existsSync(TARGET)) {
     console.log("\n  skillless is not installed.\n");
     return;
+  }
+
+  // Remove commands from ~/.claude/commands/
+  const commandsSrc = join(ROOT, "commands");
+  if (existsSync(commandsSrc)) {
+    for (const file of readdirSync(commandsSrc)) {
+      const cmdPath = join(COMMANDS_DIR, file);
+      if (existsSync(cmdPath)) {
+        rmSync(cmdPath);
+      }
+    }
   }
 
   execSync(`rm -rf "${TARGET}"`);

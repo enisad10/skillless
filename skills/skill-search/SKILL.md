@@ -26,7 +26,7 @@ WebFetch: https://skills.sh/?q={query}
 Parse the page to extract matching skills. Each result includes:
 - Skill name and owner/repo
 - Install count (popularity indicator)
-- Install command: `npx skillsadd <owner/repo>`
+- Install command: `npx skills add -y -g <owner/repo>`
 
 ### Source 3: GitHub (Fallback)
 Only if Sources 1-2 return fewer than 3 results total:
@@ -55,7 +55,7 @@ Also return a structured JSON block for programmatic use:
       "description": "...",
       "installed": true,
       "install_info": {
-        "type": "skillsadd|github-plugin|skill-md|installed",
+        "type": "skills-add|github-plugin|skill-md|installed",
         "url_or_name": "..."
       }
     }
