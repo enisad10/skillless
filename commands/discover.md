@@ -19,7 +19,7 @@ Take the user's search argument as the query. If no argument provided, ask:
 Search across all 3 sources (local, skills.sh, GitHub) following the same logic as the `skill-search` skill:
 
 1. **Local**: Use Glob to find `~/.claude/skills/*/SKILL.md`, then Grep for query keywords
-2. **skills.sh**: Use WebFetch on `https://skills.sh/?q={query}` to find matching skills
+2. **skills.sh**: Use Bash to run `npx skills find {query}` and parse the output for matching skills
 3. **GitHub (fallback)**: Only if fewer than 3 results from above, use WebSearch: `site:github.com "SKILL.md" claude {query}`
 
 ### Step 3: Display Results

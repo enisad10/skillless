@@ -4,7 +4,7 @@ Search for Claude Code skills across multiple sources.
 
 user-invocable: false
 description: Searches for relevant skills across local installation, skills.sh directory, and GitHub. Called by other skills or commands.
-allowed-tools: [Read, Glob, Grep, WebSearch, WebFetch]
+allowed-tools: [Read, Glob, Grep, Bash, WebSearch]
 
 ## Instructions
 
@@ -19,14 +19,21 @@ Grep: search for the query keywords in matched files
 Mark these as `installed: true`.
 
 ### Source 2: skills.sh Directory
-Search the skills.sh open skill directory:
+Search the skills.sh open skill directory using the CLI:
+```bash
+npx skills find {query}
 ```
-WebFetch: https://skills.sh/?q={query}
+Parse the output to extract matching skills. Each line follows the format:
 ```
-Parse the page to extract matching skills. Each result includes:
-- Skill name and owner/repo
+owner/repo@skill-name    <N> installs
+└ https://skills.sh/owner/repo/skill-name
+```
+Extract from the output:
+- Skill name and exact owner/repo@skill-name path
 - Install count (popularity indicator)
-- Install command: `npx skills add -y -g <owner/repo>`
+- Install command: `npx skills add -y -g <owner/repo@skill-name>`
+
+**IMPORTANT**: Always use the exact owner/repo path from the CLI output. Do NOT guess or modify the path.
 
 ### Source 3: GitHub (Fallback)
 Only if Sources 1-2 return fewer than 3 results total:

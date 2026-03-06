@@ -54,7 +54,7 @@ Track two lists:
 For EACH uncovered technology, search for available tools:
 
 1. **Local skills directory**: Glob `~/.claude/skills/*{keyword}*/SKILL.md`
-2. **skills.sh**: WebFetch `https://skills.sh/?q={keyword}`
+2. **skills.sh**: Bash `npx skills find {keyword}` — parse the CLI output for exact owner/repo paths
 3. **GitHub (fallback)**: Only if fewer than 3 results from above, WebSearch: `site:github.com "SKILL.md" claude {keyword}`
 
 Collect all found tools with their source.
