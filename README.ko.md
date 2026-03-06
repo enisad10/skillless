@@ -1,6 +1,6 @@
 <div align="center">
 
-# skillless
+<img src="./assets/logo.png" alt="skillless" width="600" />
 
 **스킬이 뭔지 몰라도 됩니다.**
 

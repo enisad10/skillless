@@ -1,6 +1,6 @@
 <div align="center">
 
-# skillless
+<img src="./assets/logo.png" alt="skillless" width="600" />
 
 **You don't need to know what skills are.**
 
