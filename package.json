@@ -1,0 +1,29 @@
+{
+  "name": "skillless",
+  "version": "0.1.0",
+  "description": "Auto-discovery plugin for Claude Code — automatically recommends and installs capabilities without users needing to know about skills",
+  "author": "0oooooooo0",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "skillless": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    ".claude-plugin/",
+    "skills/",
+    "commands/"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skills",
+    "plugin",
+    "auto-discovery",
+    "ai"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0oooooooo0/skillless.git"
+  }
+}
